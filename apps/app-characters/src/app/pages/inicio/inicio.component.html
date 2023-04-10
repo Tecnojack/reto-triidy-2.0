@@ -1,0 +1,105 @@
+<div class="container">
+  <div class="sidebar">
+    <figure class="logo">
+      <img src="/assets/logo.png" alt="" />
+    </figure>
+    <div class="input_search">
+      <label for="">Search</label>
+      <input type="text" [(ngModel)]="term" placeholder="Saul" (change)="onSearch()" />
+    </div>
+    <div class="categories">
+
+    </div>
+    <div class="status">
+      <h3>Filtrar por estado</h3>
+      <select [(ngModel)]="selectedCategory" (change)="onFilter()" placeholder="Estado" name="Status">
+        <option *ngFor="let category of categories" [value]="category" value="Seleccione" placeholder="Seleccione">{{
+          category }}</option>
+      </select>
+    </div>
+    <div class="buttons">
+      <button (click)="onSearch()" class="btn-primary">SEARCH</button>
+    </div>
+  </div>
+
+  <section class="results" *ngIf="!showFavorites">
+    <button class="view-favorite" mat-button (click)="getFavorites()">
+      Ver favoritos
+    </button>
+    <div class="results__top">
+      <p>{{nResults}} Results</p>
+    </div>
+    <div class="results__cards">
+      <div *ngFor="let character of characters">
+        <div class="card">
+          <figure>
+            <img src="{{character.image}}" alt="" />
+          </figure>
+          <img src="" alt="" />
+          <div class="mini_card">
+            <div class="mini_card__content">
+              <p class="mini_cardName">{{character.name}}</p>
+              <p class="mini_cardNick">{{character.status}}</p>
+              <hr />
+              <p class="mini_cardLabel">Genero</p>
+              <p class="mini_cardOcupation">{{character.gender}}</p>
+              <span>{{character.created|date}}</span>
+            </div>
+          </div>
+        </div>
+        <button class="add-favorite" mat-button (click)="toggleFavorite(character)">
+          Añadir a favoritos
+        </button>
+        <br>
+      </div>
+
+    </div>
+    <div style="justify-content: center; display: flex;">
+      <button *ngIf="showButton" (click)="onScrollDown()" class="button-more ">
+        <h2 style="color: rgb(255, 255, 255);">Ver más</h2>
+      </button>
+
+    </div>
+  </section>
+  <div class="results" *ngIf="showFavorites">
+    <button class="view-favorite" mat-button (click)="getFavorites()">
+      Ver todo
+    </button>
+    <div class="results__top">
+      <p>Favoritos </p>
+    </div>
+    <div class="results__cards">
+      <div *ngFor="let fav of favorites">
+        <div class="card">
+          <figure>
+            <img src="{{fav.image}}" alt="" />
+          </figure>
+          <img src="" alt="" />
+          <div class="mini_card">
+            <div class="mini_card__content">
+              <p class="mini_cardName">{{fav.name}}</p>
+              <p class="mini_cardNick">{{fav.status}}</p>
+              <hr />
+              <p class="mini_cardLabel">Genero</p>
+              <p class="mini_cardOcupation">{{fav.gender}}</p>
+              <span>{{fav.created|date}}</span>
+            </div>
+          </div>
+        </div>
+        <button class="add-favorite" mat-button (click)="deleteFavorite(fav)">
+          Eliminar de favoritos
+        </button>
+        <br>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<button *ngIf="showButton" (click)="onScrollTop()" class="button "><svg xmlns="http://www.w3.org/2000/svg" width="30"
+    height="16" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
+    <path fill-rule="evenodd"
+      d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z" />
+  </svg></button>
+
